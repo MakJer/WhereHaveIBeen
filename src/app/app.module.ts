@@ -4,17 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { WorldmapComponent } from './worldmap/worldmap.component';
+import { MapService } from './map.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    WorldmapComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [MapService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
