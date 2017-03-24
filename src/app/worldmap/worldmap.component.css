@@ -1,6 +1,17 @@
-#resetBtn {
+#world-map {
+  width: 100%;
+  height: 100vh
+}
+
+div.btns {
   position: absolute;
-  top: 3%;
-  right: 3%;
+  top: 10px;
+  right: 10px;
+  padding: 3px;
   z-index: 99;
+}
+
+div.btns button {
+  display: block;
+  margin: 0 0 3px auto;
 }

@@ -6,12 +6,10 @@ import { MapService } from '../map.service';
   templateUrl: './worldmap.component.html',
   styleUrls: ['./worldmap.component.css']
 })
-export class WorldmapComponent implements OnInit {
+export class WorldMapComponent implements OnInit {
 
   constructor(private mapService: MapService) { }
 
-  ngOnInit() {
-    this.mapService.load();
-  }
+  ngOnInit() { }    
 
 }

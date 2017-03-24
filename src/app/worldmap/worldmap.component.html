@@ -1,2 +1,6 @@
-<button id="resetBtn" (click)="mapService.reset()">Reset</button>
-<div id="world-map" style="width: 100%; height: 100vh"></div>
+<div class="btns">
+  <button id="saveBtn" (click)="mapService.save()">Save</button>
+  <button (click)="mapService.reload()">Reload</button>
+  <button id="resetBtn" (click)="mapService.reset()">Reset</button>
+</div>
+<div id="world-map"></div>

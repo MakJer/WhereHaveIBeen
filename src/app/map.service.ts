@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { selectOrCreateRenderHostElement } from '@angular/core/src/linker/view_utils';
 
 declare var jvm: any;
 declare var $: any;
@@ -8,16 +10,35 @@ var map: any;
 @Injectable()
 export class MapService {
 
-  private selected: Array<string> = [];
-  private readonly COLORS = [
+  private static readonly COLORS = [
     'deeppink', 'deepskyblue', 'lightcoral', 'steelblue', 'limegreen', 'tomato', 'orange', 'chocolate'
   ];
 
+  private static readonly STORAGENAME = 'selCtrys';
 
-  constructor() { }
+  private selected: Array<string> = [];
 
+  constructor(
+    @Inject(CookieService) private cookieService: CookieService) {
 
-  load(): void {
+    this.reload();
+  }
+
+  save(): void {
+    this.cookieService.putObject(MapService.STORAGENAME, this.selected);
+  }
+
+  reload() {
+    this.loadFromCookie();
+    this.load();
+  }
+
+  reset() {
+    this.selected = [];
+    this.load();
+  }
+
+  private load(): void {
 
     const thisService = this;
     $(function(){
@@ -39,30 +60,34 @@ export class MapService {
       map.series.regions[0].setValues(thisService.getCountryColors());
       map.applyTransform();
     });
+  }
 
+  private loadFromCookie(): void {
+    const saved = this.cookieService.getObject(MapService.STORAGENAME);
+    if (saved &&
+      (saved instanceof Array) &&
+      ((<Array<any>>saved).every(i => typeof i === 'string'))) {
+
+      this.selected = saved;
+    }
   }
 
   private getCountryColors(): any {
     let value = {};
     this.selected.forEach((country) => {
       const colorIdx = country.split('').map(i => i.charCodeAt(0)).reduce((acc, val) => acc+val, 0);
-      value[country] = this.COLORS[colorIdx % (this.COLORS.length-1)];
+      value[country] = MapService.COLORS[colorIdx % (MapService.COLORS.length-1)];
     });
     return value;
   }
 
-  toggleCountry(code: string) {
+  private toggleCountry(code: string) {
     let idx;
     if ((idx = this.selected.indexOf(code)) >= 0) {
       this.selected.splice(idx, 1);
     } else {
       this.selected.push(code);
     }
-    this.load();
-  }
-
-  reset() {
-    this.selected = [];
     this.load();
   }
 

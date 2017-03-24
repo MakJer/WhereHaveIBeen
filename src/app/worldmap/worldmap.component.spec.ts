@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { WorldmapComponent } from './worldmap.component';
+import { WorldMapComponent } from './worldmap.component';
 
-describe('WorldmapComponent', () => {
-  let component: WorldmapComponent;
-  let fixture: ComponentFixture<WorldmapComponent>;
+describe('WorldMapComponent', () => {
+  let component: WorldMapComponent;
+  let fixture: ComponentFixture<WorldMapComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ WorldmapComponent ]
+      declarations: [ WorldMapComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WorldmapComponent);
+    fixture = TestBed.createComponent(WorldMapComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
