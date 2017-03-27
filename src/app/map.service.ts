@@ -1,6 +1,5 @@
 import { Injectable, Inject } from '@angular/core';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
-import { selectOrCreateRenderHostElement } from '@angular/core/src/linker/view_utils';
 
 declare var jvm: any;
 declare var $: any;
