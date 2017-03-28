@@ -16,12 +16,11 @@ export class MapService {
 
   private colors: string[];
 
-  private static readonly STORAGENAME = 'selCtrys';
+  private static readonly STORAGENAME = 'WorldMapSelCtrys';
 
   private selected: Array<string> = [];
 
   constructor(
-    @Inject(CookieService) private cookieService: CookieService,
     @Inject(Http) private http: Http
     ) {
 
@@ -33,11 +32,11 @@ export class MapService {
   }
 
   save(): void {
-    this.cookieService.putObject(MapService.STORAGENAME, this.selected);
+    localStorage.setItem(MapService.STORAGENAME, JSON.stringify(this.selected));
   }
 
   reload() {
-    this.loadFromCookie();
+    this.loadFromStorage();
     this.load();
   }
 
@@ -70,8 +69,8 @@ export class MapService {
     });
   }
 
-  private loadFromCookie(): void {
-    const saved = this.cookieService.getObject(MapService.STORAGENAME);
+  private loadFromStorage(): void {
+    const saved = JSON.parse(localStorage.getItem(MapService.STORAGENAME));
     if (saved &&
       (saved instanceof Array) &&
       ((<Array<any>>saved).every(i => typeof i === 'string'))) {
