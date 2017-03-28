@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { Http } from '@angular/http';
 
 declare var jvm: any;
 declare var $: any;
@@ -13,14 +14,22 @@ export class MapService {
     'deeppink', 'deepskyblue', 'lightcoral', 'steelblue', 'limegreen', 'tomato', 'orange', 'chocolate'
   ];
 
+  private colors: string[];
+
   private static readonly STORAGENAME = 'selCtrys';
 
   private selected: Array<string> = [];
 
   constructor(
-    @Inject(CookieService) private cookieService: CookieService) {
+    @Inject(CookieService) private cookieService: CookieService,
+    @Inject(Http) private http: Http
+    ) {
 
-    this.reload();
+    http.get('../assets/colors.json').subscribe((resp) => {
+      this.colors = Object.getOwnPropertyNames(resp.json());
+      this.reload();
+    });
+
   }
 
   save(): void {
@@ -73,9 +82,10 @@ export class MapService {
 
   private getCountryColors(): any {
     let value = {};
+    const thisService = this;
     this.selected.forEach((country) => {
       const colorIdx = country.split('').map(i => i.charCodeAt(0)).reduce((acc, val) => acc+val, 0);
-      value[country] = MapService.COLORS[colorIdx % (MapService.COLORS.length-1)];
+      value[country] = thisService.colors[colorIdx % (thisService.colors.length-1)];
     });
     return value;
   }
