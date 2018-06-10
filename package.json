@@ -42,7 +42,7 @@
     "karma-coverage-istanbul-reporter": "^0.2.0",
     "protractor": "~5.1.0",
     "ts-node": "1.2.1",
-    "tslint": "^4.3.0",
+    "tslint": "^5.0.0",
     "typescript": "^2.1.5"
   }
 }

@@ -1,12 +1,13 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-const hiddenState = (name) =>
-  state(name, style({
+export function hiddenState(name) {
+  return state(name, style({
     opacity: 0,
     display: 'hidden',
     'z-index': -1
   }));
+}
 
 @Component({
   selector: 'app-root',
